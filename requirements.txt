@@ -1,0 +1,11 @@
+aiohttp==3.7.4
+async-timeout==3.0.1
+
+cryptography==3.4.7
+aiohttp_session==2.9.0
+
+aiomysql==0.0.21
+arq>=0.20
+
+anyio==3.1.0
+aiozipkin==1.1.0
