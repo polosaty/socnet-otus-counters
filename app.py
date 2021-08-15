@@ -19,6 +19,7 @@ from login import require_login
 from rest import make_rest
 from utils import close_db_pool
 from utils import extract_database_credentials
+from zipkin_monkeypatch import _set_span_properties
 
 logger = logging.getLogger(__name__)
 
@@ -120,6 +121,7 @@ async def make_app(host, port):
     app = web.Application()
     app['instance_id'] = os.getenv('INSTANCE_ID', '1')
     jaeger_address = os.getenv('JAEGER_ADDRESS')
+    az.aiohttp_helpers._set_span_properties = _set_span_properties
     if jaeger_address:
         endpoint = az.create_endpoint(f"counters_{app['instance_id']}", ipv4=host, port=port)
         tracer = await az.create(jaeger_address, endpoint, sample_rate=1.0)
